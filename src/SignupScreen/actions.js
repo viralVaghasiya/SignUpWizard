@@ -18,7 +18,7 @@ export const incrementCountThunk = ()=>(
   }
 )
 
-export const handleCard = ()=>{
+export const handleLogin = ()=>{
   Actions.chooseimage({title: 'Custom Card Title'})
   // Redux require you to return an object with type.
   return {type: 'CardPush'}
