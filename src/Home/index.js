@@ -37,31 +37,73 @@ class Home extends Component {
        });
      });
    }
-
+   handleHome() {
+     const { handleHome } = this.props;
+     AsyncStorage.multiSet([
+       ["fname", ""],
+       ["lname", ""],
+       ["address", ""],
+       ["city", ""],
+       ["state", ""],
+       ["country", ""],
+       ["email", ""],
+       ["avatarSource", ""],
+       ["password", ""]
+     ]);
+     alert("signup success");
+     setTimeout(() => {
+       handleHome();
+     }, 1500);
+   }
 
 
  render() {
-   const { handleHome } = this.props;
-   const { fname, lname, address, city, state, country, avatarSource } = this.state;
+
+   const {
+     fname,
+     lname,
+     address,
+     city,
+     state,
+     country,
+     avatarSource,
+     email,
+     password
+   } = this.state;
 
    return (
      <Container>
+       <Header>
+         <Body>
+           <Title>Signup Wizard Step4</Title>
+         </Body>
+       </Header>
        <Content>
-         <View style={styles.pictureContainer}>
-           <Image source={(avatarSource) ? {uri: avatarSource} : null} style={styles.picture}/>
+         <View style={styles.container}>
+           <View style={styles.pictureContainer}>
+             <Image
+               source={avatarSource ? { uri: avatarSource } : null}
+               style={styles.picture}
+             />
+           </View>
+           <Text style={styles.inputText}>First name: {fname} </Text>
+           <Text style={styles.inputText}>Last name: {lname}</Text>
+           <Text style={styles.inputText}>Address: {address}</Text>
+           <Text style={styles.inputText}>City: {city}</Text>
+           <Text style={styles.inputText}>State: {state}</Text>
+           <Text style={styles.inputText}>country: {country}</Text>
+           <Text style={styles.inputText}>Email: {email}</Text>
+           <Text style={styles.inputText}>Password: {password}</Text>
          </View>
-         <Text style={styles.inputText}>First name: {fname}</Text>
-         <Text style={styles.inputText}>Last name: {lname}</Text>
-         <Text style={styles.inputText}>Address: {Address}</Text>
-         <Text style={styles.inputText}>City: {city}</Text>
-         <Text style={styles.inputText}>State: {state}</Text>
-         <Text style={styles.inputText}>country: {country}</Text>
        </Content>
 
-       <TouchableOpacity onPress={() => this.handleHome()} style={styles.SubmitButton}>
-         <Text style={styles.previewText}>Go To Sign Up</Text>
-       </TouchableOpacity>
-
+       <Button
+         block
+         onPress={() => this.handleHome()}
+         style={styles.SubmitButton}
+       >
+         <Text style={styles.previewText}>Submit</Text>
+       </Button>
      </Container>
    );
  }

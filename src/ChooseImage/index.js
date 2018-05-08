@@ -2,9 +2,31 @@
 import * as actions from './actions'
 import {connect} from 'react-redux'
 import {getNav} from '../reducers'
-import React, {Component} from 'react'
-import { View, Text, Platform, StyleSheet, Dimensions, TouchableOpacity, Image, AsyncStorage } from 'react-native'
-import { Container, Content } from 'native-base'
+import React, {Component} from 'react' 
+import {
+  View,
+  Text,
+  Platform,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  AsyncStorage,
+  Image,
+  PixelRatio
+} from "react-native";
+import {
+  Container,
+  Content,
+  Header,
+  Title,
+  Button,
+  Input,
+  Picker,
+  Right,
+  Left,
+  Body,
+  Item
+} from "native-base";
 import ImagePicker from 'react-native-image-picker';
 const { HEIGHT, WIDTH } = Dimensions.get('window');
 
@@ -64,19 +86,41 @@ class ChooseImage extends Component {
 
    return (
      <Container>
+       <Header>
+         <Body>
+           <Title>Signup Wizard Step2</Title>
+         </Body>
+       </Header>
        <Content>
-         <View style={styles.pictureContainer}>
-           <Image source={(avatarSource) ? {uri: avatarSource} : null} style={styles.picture}/>
-           <TouchableOpacity style={styles.selectImage} onPress={this.selectPhotoTapped.bind(this)}>
-             <Icon name="ios-camera" size={30} color="rgba(255,255,255,0.8)" />
+         <View style={styles.container}>
+           <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+             <View
+               style={[
+                 styles.avatar,
+                 styles.avatarContainer,
+                 { marginBottom: 20 }
+               ]}
+             >
+               {this.state.avatarSource === null ? (
+                 <Text>Select a Photo</Text>
+               ) : (
+                 <Image
+                   style={styles.avatar}
+                   source={this.state.avatarSource}
+                 />
+               )}
+             </View>
            </TouchableOpacity>
+
+           <Button
+             block
+             onPress={() => this._handleSaveProfile()}
+             style={styles.SubmitButton}
+           >
+             <Text style={styles.previewText}>Next</Text>
+           </Button>
          </View>
        </Content>
-
-       <TouchableOpacity onPress={() => this._handleSaveProfile()} style={styles.SubmitButton}>
-         <Text style={styles.previewText}>SAVE PROFILE</Text>
-       </TouchableOpacity>
-
      </Container>
    );
  }
@@ -86,47 +130,38 @@ class ChooseImage extends Component {
 
 const styles = StyleSheet.create({
 
-  	pictureContainer: {
-  		height: HEIGHT * 0.19,
-  		marginTop: HEIGHT * 0.015,
-  		marginBottom: HEIGHT * 0.05,
-  		alignItems: 'center',
-  		justifyContent: 'center'
-  	},
+  container: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10
+  },
+  avatarContainer: {
+    borderColor: "#9B9B9B",
+    borderWidth: 1 / PixelRatio.get(),
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  avatar: {
+    borderRadius: 75,
+    width: 150,
+    height: 150
+  },
+  SubmitButton: {
+    height: HEIGHT * 0.08,
+    backgroundColor: "rgb(90, 90, 221)",
+    alignItems: "center",
+    justifyContent: "center"
+  },
 
-  	picture: {
-  		height: HEIGHT * 0.19,
-  		width: HEIGHT * 0.19,
-  		borderRadius: HEIGHT * 0.095,
-  		resizeMode: 'cover',
-  		borderWidth: 2,
-  		borderColor:'white',
-  	},
-
-  	selectImage: {
-  		height: HEIGHT * 0.19,
-  		width: HEIGHT * 0.19,
-  		borderRadius: HEIGHT * 0.095,
-  		borderWidth: 2,
-  		borderColor:'white',
-  		backgroundColor: '#0005',
-  		alignItems: 'center',
-  		justifyContent: 'center',
-  		position: 'absolute'
-  	},
-
-  	SubmitButton: {
-  		height: HEIGHT * 0.08,
-      backgroundColor: 'rgb(90, 90, 221)',
-  		alignItems:'center',
-      justifyContent: 'center'
-  	},
-
-  	previewText: {
-  		color:'white',
-  		fontSize: 20,
-  		letterSpacing: 0.8,
-  	},
+  previewText: {
+    color: "white",
+    fontSize: 20,
+    letterSpacing: 0.8
+  }
 
 });
 
